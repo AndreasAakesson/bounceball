@@ -1,6 +1,6 @@
 bounceball
 ==========
 
-Et spill som ligner på DX Ball
+Eksamenprosjekt i C++ VT14 HiOA
 
 Se prosjektbeskrivelse.md
