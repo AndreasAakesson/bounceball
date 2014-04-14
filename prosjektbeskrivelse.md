@@ -34,5 +34,7 @@ Disse er ting jeg ønsker å få implementert i spillet, avhenging av hva jeg re
 ## Utfodringer
 - Effektiv "collision detection" (ball-brick og ball-racket) - hvordan dette skal kunne implementeres lurt og for å undgå unødvendige beregninger. Forslag?
 
+------
+Fint, kjør på!
 
-
+- Alfred
