@@ -11,7 +11,6 @@ const QDir Level::LevelPath = QDir("../Resources/levels", "level_*");
 const QDir Level::LevelPath = QDir("./levels", "level_*");
 #endif
 
-
 const int Level::BrickCols = 16;
 const int Level::BrickRows = 16;
 

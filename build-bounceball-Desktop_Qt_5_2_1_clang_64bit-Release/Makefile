@@ -244,7 +244,7 @@ first: all
 
 ####### Build rules
 
-all: Makefile bounceball.app/Contents/PkgInfo bounceball.app/Contents/Resources/empty.lproj bounceball.app/Contents/Info.plist bounceball.app/Contents/Resources/placeholder.icns bounceball.app/Contents/Resources/levels/ bounceball.app/Contents/Resources/audio/ $(TARGET)
+all: Makefile bounceball.app/Contents/PkgInfo bounceball.app/Contents/Resources/empty.lproj $(TARGET)
 
 $(TARGET):  $(OBJECTS)  
 	@test -d bounceball.app/Contents/MacOS/ || mkdir -p bounceball.app/Contents/MacOS/
@@ -502,10 +502,9 @@ bounceball.app/Contents/Resources/empty.lproj:
 	@test -d bounceball.app/Contents/Resources || mkdir -p bounceball.app/Contents/Resources
 	@touch bounceball.app/Contents/Resources/empty.lproj
 	
-bounceball.app/Contents/Info.plist: 
-	@test -d bounceball.app/Contents || mkdir -p bounceball.app/Contents
-	@$(DEL_FILE) bounceball.app/Contents/Info.plist
-	@sed -e "s,@SHORT_VERSION@,1.0,g" -e "s,@TYPEINFO@,????,g" -e "s,@ICON@,placeholder.icns,g" -e "s,@BUNDLEIDENTIFIER@,com.yourcompany.bounceball,g" -e "s,@EXECUTABLE@,bounceball,g" -e "s,@TYPEINFO@,????,g" ../../../../../dev/Qt/5.2.1/clang_64/mkspecs/macx-clang/Info.plist.app >bounceball.app/Contents/Info.plist
+: 
+	@$(DEL_FILE) 
+	@sed -e "s,@SHORT_VERSION@,1.0,g" -e "s,@TYPEINFO@,????,g" -e "s,@ICON@,placeholder.icns,g" -e "s,@BUNDLEIDENTIFIER@,com.yourcompany.bounceball,g" -e "s,@EXECUTABLE@,bounceball,g" -e "s,@TYPEINFO@,????,g" ../bounceball/Info.plist >
 bounceball.app/Contents/Resources/placeholder.icns: ../bounceball/placeholder.icns
 	@test -d bounceball.app/Contents/Resources/ || mkdir -p bounceball.app/Contents/Resources/
 	@$(DEL_FILE) bounceball.app/Contents/Resources/placeholder.icns

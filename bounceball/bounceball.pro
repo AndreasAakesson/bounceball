@@ -25,8 +25,10 @@ FORMS    +=
 
 RESOURCES +=
 
-ICON = placeholder.icns
-
+macx {
+    QMAKE_INFO_PLIST = Info.plist
+    ICON = placeholder.icns
+}
 ## levels
 levels.files = data/levels/
 macx {
