@@ -20,6 +20,7 @@ class Level : public QGraphicsScene, public ScoreBoard
     QTimer* timer;
     Paddle* paddle_;
     QGraphicsTextItem* pause_msg;
+    QGraphicsTextItem* v_life; // visual life
 public:
     Level(QGraphicsView* parent = 0);
 

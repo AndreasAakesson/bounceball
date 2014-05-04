@@ -37,6 +37,13 @@ Level::Level(QGraphicsView *parent) :
     addItem(pause_msg);
     pause_msg->setPos((width() / 2) - pause_msg->boundingRect().width()/2, height() / 2);
 
+    // set current hp (sorry, last minute... :/)
+    v_life = new QGraphicsTextItem(QString::number(life));
+    v_life->setDefaultTextColor(Qt::red);
+    v_life->setFont(font);
+    addItem(v_life);
+    v_life->setPos(width()-50,height()-50);
+
     timer = new QTimer(this);
     timer->setInterval(Game::FPS);
     connect(timer, SIGNAL(timeout()), this, SLOT(advance()));
@@ -61,6 +68,7 @@ bool Level::isRunning() {
 
 void Level::ballOutside() {
     life--;
+    v_life->setPlainText(QString::number(life));
     Game* game = dynamic_cast<Game*>(views().at(0));
     if(!game)
         throw std::runtime_error("Level cannot recognize Game, exiting...");
