@@ -4,6 +4,7 @@
 #include <QGraphicsScene> // inherits
 #include <QGraphicsView> // parameter
 #include <QTimer> // for animating
+#include <QString>
 
 #include "entites/paddle.h"
 #include "entites/ball.h"
@@ -14,6 +15,7 @@ class Level : public QGraphicsScene, public ScoreBoard
 {
     Q_OBJECT
     int life; // current lives
+    QString from_file; // to id the level
 
     QTimer* timer;
     Paddle* paddle_;
@@ -38,6 +40,8 @@ public:
     void ballOutside(); // subtract 1 life
     void removeGameObject(int gobjectType);
     void notifyBrickDestroyed(); // check if level is finished and tell game
+    QString fromFile(); // returns id for level
+    void fromFile(QString filename); // sets id for level
 
     ~Level();
 private:

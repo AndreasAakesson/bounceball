@@ -84,7 +84,15 @@ void Game::resetLevel() {
 }
 
 void Game::restartLevel() {
-    cout << "Implement if time..." << endl;
+    if(!currentLevel)
+        throw runtime_error("Trying to restart level when there is none, exiting..");
+
+    int key = levellist.indexOf(currentLevel->fromFile());
+    if(key < 0)
+        throw runtime_error("Cannot find the levelname in levellist, exiting..");
+
+    setCurrentLevel(levelFactory.createLevel(levellist[key])); // or currentLevel->fromFile();
+    start();
 }
 
 void Game::exitLevel() {
@@ -175,8 +183,9 @@ void Game::handleButtonClick(Button &button) {
     button.playSound();
     switch(button.gameFunction()) {
 
-    case Button::GFunctionQuickStart: { // Play first level (or random?)
-        setCurrentLevel(levelFactory.createLevel(levellist[0]));
+    case Button::GFunctionQuickStart: { // Play random level
+        int rand = qrand() % levellist.size();
+        setCurrentLevel(levelFactory.createLevel(levellist[rand]));
         start();
         break;
     }

@@ -87,6 +87,14 @@ bool Level::finished() {
     return true;
 }
 
+QString Level::fromFile() {
+    return from_file;
+}
+
+void Level::fromFile(QString filename) {
+    from_file = filename;
+}
+
 void Level::notifyBrickDestroyed() {
     if(finished()) {
         Game* game = dynamic_cast<Game*>(views().at(0));

@@ -28,6 +28,7 @@ Level* LevelFactory::createLevel(QString levelname, QDir levelpath) {
         addBricks(levelfile, level); // from levelfile to level
         createBall(level);
         createPaddle(level);
+        level->fromFile(levelname);
     }
 
     // else return test level (lazy error handling...)
