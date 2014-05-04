@@ -7,6 +7,7 @@
 
 class Menu : public QGraphicsScene
 {
+    QPixmap background;
 protected:
     qreal m_width; // menu width
     qreal b_width; // button width
@@ -17,6 +18,7 @@ protected:
     QVector<Button*> buttons;
     void addButtons(QVector<Button*> &b_vector);
     const static QDir soundDir;
+    virtual void drawBackground(QPainter *painter, const QRectF &rect);
 public:
     Menu(Game* parent=0);
     virtual ~Menu();

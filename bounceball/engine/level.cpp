@@ -32,7 +32,7 @@ Level::Level(QGraphicsView *parent) :
 
     // set pause msg
     QFont font("Courier", 24, QFont::Bold);
-    pause_msg = new QGraphicsTextItem("Press space to start.");
+    pause_msg = new QGraphicsTextItem("Press space to unpause.");
     pause_msg->setDefaultTextColor(Qt::red);
     pause_msg->setFont(font);
     addItem(pause_msg);
@@ -134,18 +134,26 @@ void Level::setPaddle(Paddle *paddle) {
 
 void Level::movePaddle(float x) {
     // avoid moving outside
-    if(x < 0)
+    if(x < 0) {
         x = 0;
-    else if(x > (sceneRect().width() - paddle_->width()))
+    }
+    else if(x > (sceneRect().width() - paddle_->width())) {
         x = sceneRect().width()-paddle_->width();
+    }
     // only move horizontal
     paddle_->setPos(x, paddle_->y());
 }
 
 void Level::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
     // if game is running
-    if(isRunning())
+    if(isRunning()) {
         movePaddle(event->scenePos().x());
+        /* wont get pause to work..., probably has to be find in qgraphicsview.
+        QPointF pt = event->scenePos();
+        if(pt.x() >= sceneRect().width() || pt.x() <= 0 || pt.y() >= sceneRect().height() || pt.y() <= 0)
+            pause();
+         */
+    }
 }
 
 Level::~Level() {

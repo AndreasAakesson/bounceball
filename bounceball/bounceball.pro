@@ -25,6 +25,8 @@ FORMS    +=
 
 RESOURCES +=
 
+ICON = placeholder.icns
+
 ## levels
 levels.files = data/levels/
 macx {

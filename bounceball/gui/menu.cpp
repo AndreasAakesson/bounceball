@@ -21,6 +21,8 @@ Menu::Menu(Game *parent) :
         logo_height = item->boundingRect().height()+10;
     }
 
+    background.load(":/img/bg1.jpg");
+
     offset_top = logo_height;
 
     Q_CLEANUP_RESOURCE(gui);
@@ -33,6 +35,15 @@ void Menu::addButtons(QVector<Button*> &b_vector) {
 
         // center button on scene
         b->setPos(m_width - b_width/2, b_margin + i*(b_margin+b_height)+offset_top);
+    }
+}
+
+void Menu::drawBackground(QPainter *painter, const QRectF &rect) {
+    if(!background.isNull()) {
+        painter->drawPixmap(rect.topLeft(), background);
+    }
+    else {
+        QGraphicsScene::drawBackground(painter, rect);
     }
 }
 

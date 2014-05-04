@@ -54,6 +54,10 @@ LevelEndMenu::LevelEndMenu(Game *parent) :
     addButtons(buttons);
 }
 
+void LevelEndMenu::drawBackground(QPainter *painter, const QRectF &rect) {
+    QGraphicsScene::drawBackground(painter, rect);
+}
+
 LevelEndMenu::~LevelEndMenu() {
     delete end_message;
     delete end_score;

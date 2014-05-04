@@ -244,7 +244,7 @@ first: all
 
 ####### Build rules
 
-all: Makefile bounceball.app/Contents/PkgInfo bounceball.app/Contents/Resources/empty.lproj bounceball.app/Contents/Info.plist bounceball.app/Contents/Resources/levels/ bounceball.app/Contents/Resources/audio/ $(TARGET)
+all: Makefile bounceball.app/Contents/PkgInfo bounceball.app/Contents/Resources/empty.lproj bounceball.app/Contents/Info.plist bounceball.app/Contents/Resources/placeholder.icns bounceball.app/Contents/Resources/levels/ bounceball.app/Contents/Resources/audio/ $(TARGET)
 
 $(TARGET):  $(OBJECTS)  
 	@test -d bounceball.app/Contents/MacOS/ || mkdir -p bounceball.app/Contents/MacOS/
@@ -505,7 +505,11 @@ bounceball.app/Contents/Resources/empty.lproj:
 bounceball.app/Contents/Info.plist: 
 	@test -d bounceball.app/Contents || mkdir -p bounceball.app/Contents
 	@$(DEL_FILE) bounceball.app/Contents/Info.plist
-	@sed -e "s,@SHORT_VERSION@,1.0,g" -e "s,@TYPEINFO@,????,g" -e "s,@ICON@,,g" -e "s,@BUNDLEIDENTIFIER@,com.yourcompany.bounceball,g" -e "s,@EXECUTABLE@,bounceball,g" -e "s,@TYPEINFO@,????,g" ../../../../../dev/Qt/5.2.1/clang_64/mkspecs/macx-clang/Info.plist.app >bounceball.app/Contents/Info.plist
+	@sed -e "s,@SHORT_VERSION@,1.0,g" -e "s,@TYPEINFO@,????,g" -e "s,@ICON@,placeholder.icns,g" -e "s,@BUNDLEIDENTIFIER@,com.yourcompany.bounceball,g" -e "s,@EXECUTABLE@,bounceball,g" -e "s,@TYPEINFO@,????,g" ../../../../../dev/Qt/5.2.1/clang_64/mkspecs/macx-clang/Info.plist.app >bounceball.app/Contents/Info.plist
+bounceball.app/Contents/Resources/placeholder.icns: ../bounceball/placeholder.icns
+	@test -d bounceball.app/Contents/Resources/ || mkdir -p bounceball.app/Contents/Resources/
+	@$(DEL_FILE) bounceball.app/Contents/Resources/placeholder.icns
+	@$(COPY_FILE) ../bounceball/placeholder.icns bounceball.app/Contents/Resources/placeholder.icns
 bounceball.app/Contents/Resources/levels/: /Users/Andreas/Dropbox/it/cpp/bounceball/bounceball/data/levels
 	@test -d bounceball.app/Contents/Resources/levels || mkdir -p bounceball.app/Contents/Resources/levels
 	@$(DEL_FILE) -r bounceball.app/Contents/Resources/levels/
@@ -543,7 +547,8 @@ compiler_rcc_make_all: qrc_gui.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) qrc_gui.cpp
 qrc_gui.cpp: ../bounceball/gui/gui.qrc \
-		../bounceball/gui/src/logo.png
+		../bounceball/gui/src/logo.png \
+		../bounceball/gui/src/bg1.jpg
 	/Users/Andreas/dev/Qt/5.2.1/clang_64/bin/rcc -name gui ../bounceball/gui/gui.qrc -o qrc_gui.cpp
 
 compiler_moc_header_make_all: moc_level.cpp moc_bounceball.cpp
@@ -555,6 +560,8 @@ moc_level.cpp: ../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Vers
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsview.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -659,8 +666,6 @@ moc_level.cpp: ../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Vers
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -682,6 +687,8 @@ moc_bounceball.cpp: ../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -786,8 +793,6 @@ moc_bounceball.cpp: ../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -832,6 +837,8 @@ mainmenu.o: ../bounceball/gui/mainmenu.cpp ../bounceball/gui/mainmenu.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -936,8 +943,6 @@ mainmenu.o: ../bounceball/gui/mainmenu.cpp ../bounceball/gui/mainmenu.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -966,6 +971,8 @@ menu.o: ../bounceball/gui/menu.cpp ../bounceball/gui/menu.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -1070,8 +1077,6 @@ menu.o: ../bounceball/gui/menu.cpp ../bounceball/gui/menu.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -1112,6 +1117,8 @@ pausemenu.o: ../bounceball/gui/pausemenu.cpp ../bounceball/gui/pausemenu.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -1216,8 +1223,6 @@ pausemenu.o: ../bounceball/gui/pausemenu.cpp ../bounceball/gui/pausemenu.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -1247,6 +1252,8 @@ levelendmenu.o: ../bounceball/gui/levelendmenu.cpp ../bounceball/gui/levelendmen
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -1351,8 +1358,6 @@ levelendmenu.o: ../bounceball/gui/levelendmenu.cpp ../bounceball/gui/levelendmen
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -1383,6 +1388,8 @@ levelcompleted.o: ../bounceball/gui/levelcompleted.cpp ../bounceball/gui/levelco
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -1487,8 +1494,6 @@ levelcompleted.o: ../bounceball/gui/levelcompleted.cpp ../bounceball/gui/levelco
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -1519,6 +1524,8 @@ levelfailed.o: ../bounceball/gui/levelfailed.cpp ../bounceball/gui/levelfailed.h
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -1623,8 +1630,6 @@ levelfailed.o: ../bounceball/gui/levelfailed.cpp ../bounceball/gui/levelfailed.h
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -1654,6 +1659,8 @@ levelchooser.o: ../bounceball/gui/levelchooser.cpp ../bounceball/gui/levelchoose
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -1758,8 +1765,6 @@ levelchooser.o: ../bounceball/gui/levelchooser.cpp ../bounceball/gui/levelchoose
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -1787,6 +1792,8 @@ game.o: ../bounceball/engine/game.cpp ../bounceball/engine/game.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -1891,8 +1898,6 @@ game.o: ../bounceball/engine/game.cpp ../bounceball/engine/game.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -1920,6 +1925,8 @@ level.o: ../bounceball/engine/level.cpp ../bounceball/engine/level.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsview.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -2024,8 +2031,6 @@ level.o: ../bounceball/engine/level.cpp ../bounceball/engine/level.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -2533,6 +2538,8 @@ levelfactory.o: ../bounceball/helpers/levelfactory.cpp ../bounceball/helpers/lev
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsview.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -2637,8 +2644,6 @@ levelfactory.o: ../bounceball/helpers/levelfactory.cpp ../bounceball/helpers/lev
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -2783,6 +2788,8 @@ menufactory.o: ../bounceball/helpers/menufactory.cpp ../bounceball/helpers/menuf
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -2887,8 +2894,6 @@ menufactory.o: ../bounceball/helpers/menufactory.cpp ../bounceball/helpers/menuf
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -2925,6 +2930,8 @@ main.o: ../bounceball/main.cpp ../bounceball/bounceball.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -3029,8 +3036,6 @@ main.o: ../bounceball/main.cpp ../bounceball/bounceball.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \
@@ -3061,6 +3066,8 @@ bounceball.o: ../bounceball/bounceball.cpp ../bounceball/bounceball.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicsscene.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTimer \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qtimer.h \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
+		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/paddle.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QGraphicsSceneMouseEvent \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qgraphicssceneevent.h \
@@ -3165,8 +3172,6 @@ bounceball.o: ../bounceball/bounceball.cpp ../bounceball/bounceball.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qtguiversion.h \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/QSound \
 		../../../../../dev/Qt/5.2.1/clang_64/lib/QtMultimedia.framework/Versions/5/Headers/qsound.h \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QString \
-		../../../../../dev/Qt/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qstring.h \
 		../bounceball/entites/ball.h \
 		../bounceball/entites/is_vector.h \
 		../bounceball/entites/brick.h \

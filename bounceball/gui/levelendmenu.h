@@ -15,6 +15,7 @@ protected:
     QGraphicsTextItem* end_message;
     QGraphicsTextItem* end_score;
     QGraphicsTextItem* end_hits;
+    virtual void drawBackground(QPainter *painter, const QRectF &rect);
     //QGraphicsTextItem* end_hitrate; // no time to fix
 };
 
